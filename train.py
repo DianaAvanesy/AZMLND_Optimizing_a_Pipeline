@@ -15,11 +15,23 @@ def clean_data(data):
     months = {"jan":1, "feb":2, "mar":3, "apr":4, "may":5, "jun":6, "jul":7, "aug":8, "sep":9, "oct":10, "nov":11, "dec":12}
     weekdays = {"mon":1, "tue":2, "wed":3, "thu":4, "fri":5, "sat":6, "sun":7}
 
+
     # Clean and one hot encode data
+    
+    # Converts data to a Pandas DataFrame, and then drops all rows that contain NaN 
     x_df = data.to_pandas_dataframe().dropna()
-    jobs = pd.get_dummies(x_df.job, prefix="job")
+
+    # .get_dummies() - converts categorical variables into dummy variables by creating a new binary column for each unique category in the categorical variable
+    # Example: FROM    color = ['red', 'blue', 'green', 'green', 'red', 'blue']
+    #          TO      color_red = [1, 0, 0, 0, 1, 0]
+
+    jobs = pd.get_dummies(x_df.job, prefix="job") # prefix is just a name prefix for future dummy var
+
+    # .drop will remove job coloumn from the original(inplace) df
     x_df.drop("job", inplace=True, axis=1)
+
     x_df = x_df.join(jobs)
+
     x_df["marital"] = x_df.marital.apply(lambda s: 1 if s == "married" else 0)
     x_df["default"] = x_df.default.apply(lambda s: 1 if s == "yes" else 0)
     x_df["housing"] = x_df.housing.apply(lambda s: 1 if s == "yes" else 0)
