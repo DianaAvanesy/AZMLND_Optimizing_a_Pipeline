@@ -64,10 +64,10 @@ def main():
     run.log("Max iterations:", np.int(args.max_iter))
 
     # TODO: Create TabularDataset using TabularDatasetFactory
+    # TODO: TEST in Azure
     # Data is located at:
-    # "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
-
-    ds = ### YOUR CODE HERE ###
+    url = "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
+    ds = TabularDatasetFactory.from_delimited_files(url)
     
     x, y = clean_data(ds)
 
